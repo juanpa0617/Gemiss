@@ -35,3 +35,18 @@ export const deleteWishlistItemByUserAndProductService = async (userId, productV
 export const checkIfItemInWishlistService = async (userId, productVariantId) => {
     return await checkIfItemInWishlist(userId, productVariantId);
 };
+
+// Esta función te falta - es útil para el frontend
+export const toggleWishlistItemService = async (userId, productVariantId) => {
+    const isInWishlist = await checkIfItemInWishlist(userId, productVariantId);
+    
+    if (isInWishlist) {
+        // Si está, lo quita
+        await deleteWishlistItemByUserAndProduct(userId, productVariantId);
+        return { action: 'removed', inWishlist: false };
+    } else {
+        // Si no está, lo agrega
+        const newItem = await createWishlistItem({ userId, productVariantId });
+        return { action: 'added', inWishlist: true, data: newItem };
+    }
+};
