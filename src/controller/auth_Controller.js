@@ -4,7 +4,7 @@ import {
   refreshTokenService,
 } from "../services/auth_Services.js";
 
-export const login = async (req, res) => {
+export const loginController = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -29,7 +29,7 @@ export const login = async (req, res) => {
   }
 };
 
-export const register = async (req, res) => {
+export const registerController = async (req, res) => {
   try {
     const { name, lastname, email, password, telefono, birthdate } = req.body;
 
@@ -63,7 +63,7 @@ export const register = async (req, res) => {
   }
 };
 
-export const refreshToken = async (req, res) => {
+export const refreshTokenController = async (req, res) => {
   try {
     const { refreshToken } = req.body;
 
@@ -87,7 +87,7 @@ export const refreshToken = async (req, res) => {
   }
 };
 
-export const logout = async (req, res) => {
+export const logoutController = async (req, res) => {
   try {
     res.status(200).json({
       success: true,
@@ -101,7 +101,7 @@ export const logout = async (req, res) => {
   }
 };
 
-export const getProfile = async (req, res) => {
+export const getProfileController = async (req, res) => {
   try {
     const user = req.user; // Viene del middleware de autenticación
 

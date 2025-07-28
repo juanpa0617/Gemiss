@@ -1,7 +1,6 @@
 import bcrypt from "bcryptjs";
 import { generateAccessToken, generateRefreshToken } from "../utils/jwt.js";
 import {
-  getUserByEmailService, //servicio pendiente 
   createUserService,
   getUserByIdService,
 } from "../services/user_Services.js";
