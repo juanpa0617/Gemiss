@@ -1,4 +1,4 @@
-import { verifyToken } from "../utils/jwt";
+import { verifyToken } from "../utils/jwt.js";
 import { getUserByIdService } from "../services/user_Services.js";
 
 export const authenticateToken = async (req, res) => {

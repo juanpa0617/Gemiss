@@ -23,6 +23,7 @@ import orderRoutes from './routes/order_Routes.js';
 import orderDetailRoutes from './routes/order_Detail_Routes.js';
 import reviewRoutes from './routes/review_Routes.js';
 import wishlistRoutes from './routes/wishlist_Item_Routes.js';
+import authenticationRoutes from './routes/auth_Routes.js';
 
 
 export default class Servidor {
@@ -72,6 +73,7 @@ export default class Servidor {
         this.app.use("/order_detail",orderDetailRoutes);
         this.app.use("/review",reviewRoutes);
         this.app.use("/wishlist",wishlistRoutes);
+        this.app.use("/authentication",authenticationRoutes);
     }
 
     listen(){

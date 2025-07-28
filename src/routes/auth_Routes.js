@@ -1,22 +1,22 @@
 import express from 'express';
 import { 
-  login, 
-  register, 
-  refreshToken, 
-  logout, 
-  getProfile 
-} from '../controllers/auth_Controller.js';
-import { authenticateToken } from '../middleware/auth.js';
+  loginController, 
+  registerController, 
+  refreshTokenController, 
+  logoutController, 
+  getProfileController 
+} from '../controller/auth_Controller.js';
+import { authenticateToken } from '../middlewares/auth.js';
 
 const router = express.Router();
 
 // Rutas públicas
-router.post('/login', login);
-router.post('/register', register);
-router.post('/refresh-token', refreshToken);
+router.post('/login', loginController);
+router.post('/register', registerController);
+router.post('/refresh-token', refreshTokenController);
 
 // Rutas protegidas
-router.post('/logout', authenticateToken, logout);
-router.get('/profile', authenticateToken, getProfile);
+router.post('/logout', authenticateToken, logoutController);
+router.get('/profile', authenticateToken, getProfileController);
 
 export default router;

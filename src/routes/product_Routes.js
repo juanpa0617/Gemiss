@@ -7,14 +7,17 @@ import {
   changeStatusProductController,
 } from "../controller/product_Controller.js";
 import express from "express";
+import { authenticateToken } from "../middlewares/auth.js";
 
 const router = express.Router();
-
+//rutas publicas
 router.get("/", getAllProductsController);
 router.get("/:id", getProductByIdController);
-router.post("/", createProductController);
-router.put("/:id", updateProductController);
-router.delete("/:id", deleteProductController);
-router.patch("/:id/status", changeStatusProductController);
+
+//rutas protegidas 
+router.post("/",authenticateToken, createProductController);
+router.put("/:id",authenticateToken, updateProductController);
+router.delete("/:id",authenticateToken, deleteProductController);
+router.patch("/:id/status", authenticateToken,changeStatusProductController);
 
 export default router;
