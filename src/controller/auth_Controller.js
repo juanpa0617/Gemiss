@@ -89,7 +89,6 @@ export const refreshToken = async (req, res) => {
 
 export const logout = async (req, res) => {
   try {
-
     res.status(200).json({
       success: true,
       message: "Logout exitoso",
