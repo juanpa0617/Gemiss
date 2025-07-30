@@ -50,7 +50,7 @@ const Product = sequelize.define(
       type: DataTypes.DECIMAL(10, 2),
       allowNull: false,
       validate: {
-        min: 0 // ✅ Agregar validación
+        min: 0 
       }
     },
     baseSku: {

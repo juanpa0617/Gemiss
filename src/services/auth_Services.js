@@ -5,6 +5,7 @@ import {
   getUserByIdService,
 } from "../services/user_Services.js";
 import User from "../models/users_Model.js";
+import Role from "../models/role_Model.js";
 
 export const loginService = async (email, password) => {
   try {
