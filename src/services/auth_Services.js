@@ -1,5 +1,6 @@
+
 import bcrypt from "bcryptjs";
-import { generateAccessToken, generateRefreshToken } from "../utils/jwt.js";
+import { generateAccessToken, generateRefreshToken, verifyToken } from "../utils/jwt.js";
 import {
   createUserService,
   getUserByIdService,
@@ -9,7 +10,6 @@ import Role from "../models/role_Model.js";
 
 export const loginService = async (email, password) => {
   try {
-    // Buscar usuario por email con el rol incluido
     const user = await User.findOne({
       where: { email, status: "active" },
       include: [
@@ -25,22 +25,19 @@ export const loginService = async (email, password) => {
       throw new Error("Credenciales inválidas");
     }
 
-    // Verificar contraseña
     const isValidPassword = await bcrypt.compare(password, user.password_hash);
 
     if (!isValidPassword) {
       throw new Error("Credenciales inválidas");
     }
 
-    // Actualizar última conexión
     await User.update(
       { last_connection: new Date() },
       { where: { id: user.id } }
     );
 
-    // Generar tokens
     const payload = {
-      userId: user.id,
+      id: user.id, 
       email: user.email,
       role: user.role.name,
     };
@@ -67,7 +64,6 @@ export const loginService = async (email, password) => {
 
 export const registerService = async (userData) => {
   try {
-    // Verificar si el email ya existe
     const existingUser = await User.findOne({
       where: { email: userData.email },
     });
@@ -76,14 +72,12 @@ export const registerService = async (userData) => {
       throw new Error("El email ya está registrado");
     }
 
-    // Crear nuevo usuario (el hash de la contraseña se hace en el hook del modelo)
     const newUser = await createUserService({
       ...userData,
-      id_role: userData.id_role || 2, // Rol de cliente por defecto
+      id_role: userData.id_role || 2,
       status: "active",
     });
 
-    // Obtener el usuario con el rol incluido
     const userWithRole = await User.findByPk(newUser.id, {
       include: [
         {
@@ -94,9 +88,8 @@ export const registerService = async (userData) => {
       ],
     });
 
-    // Generar tokens
     const payload = {
-      userId: userWithRole.id,
+      id: userWithRole.id, 
       email: userWithRole.email,
       role: userWithRole.role.name,
     };
@@ -124,14 +117,14 @@ export const registerService = async (userData) => {
 export const refreshTokenService = async (refreshToken) => {
   try {
     const decoded = verifyToken(refreshToken);
-    const user = await getUserByIdService(decoded.userId);
+    const user = await getUserByIdService(decoded.id); 
 
     if (!user || user.status !== "active") {
       throw new Error("Usuario no válido");
     }
 
     const payload = {
-      userId: user.id,
+      id: user.id, 
       email: user.email,
       role: user.role.name,
     };
@@ -143,4 +136,3 @@ export const refreshTokenService = async (refreshToken) => {
     throw new Error("Refresh token inválido");
   }
 };
-

@@ -28,7 +28,8 @@ import authenticationRoutes from "./routes/auth_Routes.js";
 export default class Servidor {
   constructor() {
     this.app = express();
-    this.app.use(
+  this.app.use(morgan("dev"));
+        this.app.use(
       cors({
         origin: ["http://localhost:5173"],
         credentials: true,
@@ -36,7 +37,6 @@ export default class Servidor {
     );
     this.app.use(express.json());
     this.app.use(cors());
-    this.app.use(morgan("dev"));
     this.init();
     this.listen();
     this.routes();
