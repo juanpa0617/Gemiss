@@ -24,6 +24,7 @@ import orderDetailRoutes from "./routes/order_Detail_Routes.js";
 import reviewRoutes from "./routes/review_Routes.js";
 import wishlistRoutes from "./routes/wishlist_Item_Routes.js";
 import authenticationRoutes from "./routes/auth_Routes.js";
+import {runSeeders} from "./seeders/indexSeeder.js";
 
 export default class Servidor {
   constructor() {
@@ -49,6 +50,7 @@ export default class Servidor {
       await database.sync({ force: false });
       setupAssociations();
       console.log("Database synchronized successfully");
+      await runSeeders();
     } catch (error) {
       console.error("Unable to connect to the database:", error);
     }
