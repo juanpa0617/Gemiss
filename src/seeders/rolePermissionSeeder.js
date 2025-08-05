@@ -7,7 +7,7 @@ export const seedRolePermissions = async () => {
   try {
     // Obtener roles, permisos y privilegios
     const adminRole = await Role.findOne({ where: { name: 'admin' } });
-    const customerRole = await Role.findOne({ where: { name: 'customer' } });
+    const customerRole = await Role.findOne({ where: { name: 'Cliente' } });
     
     const permissions = await Permission.findAll();
     const privileges = await Privilege.findAll();
@@ -67,4 +67,4 @@ export const seedRolePermissions = async () => {
     console.error('Error en rolePermissionSeeder:', error);
     throw error;
   }
-};
+}
